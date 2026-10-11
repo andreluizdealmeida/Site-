@@ -150,7 +150,7 @@
                     <h3>Triagem Estratégica</h3>
                     <p class="text-lead">Nosso protocolo de alta produtividade exige a mineralização prévia dos fatos. Preencha os dados ao lado para análise preliminar de viabilidade antes de acionarmos nossa equipe.</p>
                 </div>
-                <form action="https://formspree.io/f/seu-id-aqui" method="POST">
+                <form id="triagem-whatsapp" action="#" method="POST" data-whatsapp="5562994030705">
                     <div class="form-group">
                         <input type="text" name="nome" class="form-input" placeholder="Nome Completo" required>
                         <input type="tel" name="telefone" class="form-input" placeholder="Telefone (WhatsApp)" required>
@@ -168,6 +168,7 @@
                         <textarea name="resumo" class="form-input" rows="3" placeholder="Síntese da res in judicium deducta (Resumo dos fatos)" required></textarea>
                     </div>
                     <button type="submit" class="btn-solid" style="width: 100%; text-align: center;">Enviar para Avaliação Forense</button>
+                    <p class="text-lead" style="font-size: 0.85rem; margin-top: 12px;">Ao continuar, o WhatsApp abrirá uma mensagem de triagem. Revise as informações antes de enviar; nenhuma mensagem é enviada automaticamente.</p>
                 </form>
             </div>
         </div>
@@ -294,6 +295,23 @@
         }, observerOptions);
 
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        const triagem = document.getElementById('triagem-whatsapp');
+        if (triagem) triagem.addEventListener('submit', function (event) {
+            event.preventDefault();
+            if (!triagem.reportValidity()) return;
+            const data = new FormData(triagem);
+            const message = [
+                'Olá, gostaria de solicitar uma avaliação jurídica inicial.',
+                'Nome: ' + String(data.get('nome') || ''),
+                'Telefone: ' + String(data.get('telefone') || ''),
+                'Área: ' + String(data.get('tese') || ''),
+                'Resumo informado: ' + String(data.get('resumo') || '')
+            ].join('\\n');
+            const link = 'https://wa.me/' + triagem.dataset.whatsapp + '?text=' + encodeURIComponent(message);
+            window.open(link, '_blank', 'noopener,noreferrer');
+        });
+
     </script>
 </body>
 </html>
