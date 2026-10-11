@@ -307,7 +307,7 @@
                 'Telefone: ' + String(data.get('telefone') || ''),
                 'Área: ' + String(data.get('tese') || ''),
                 'Resumo informado: ' + String(data.get('resumo') || '')
-            ].join('\\n');
+            ].join('\n');
             const link = 'https://wa.me/' + triagem.dataset.whatsapp + '?text=' + encodeURIComponent(message);
             window.open(link, '_blank', 'noopener,noreferrer');
         });
